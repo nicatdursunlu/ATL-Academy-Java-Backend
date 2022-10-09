@@ -1,4 +1,4 @@
-package lesson_20_serialization_and_reflection.practise.reflection_api;
+package lesson_20_serialization_and_reflection.practice.reflection_api;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
