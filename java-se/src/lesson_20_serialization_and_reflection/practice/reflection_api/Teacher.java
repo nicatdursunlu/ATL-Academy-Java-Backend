@@ -1,4 +1,4 @@
-package lesson_20_serialization_and_reflection.practise.reflection_api;
+package lesson_20_serialization_and_reflection.practice.reflection_api;
 
 public class Teacher {
     private String name;

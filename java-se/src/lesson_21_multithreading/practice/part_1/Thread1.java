@@ -1,4 +1,4 @@
-package lesson_21_multithreading.practise.part_1;
+package lesson_21_multithreading.practice.part_1;
 
 public class Thread1 {
     public static void main(String[] args) {

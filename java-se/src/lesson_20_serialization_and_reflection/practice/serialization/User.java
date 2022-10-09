@@ -1,4 +1,4 @@
-package lesson_20_serialization_and_reflection.practise.serialization;
+package lesson_20_serialization_and_reflection.practice.serialization;
 
 import java.io.Serializable;
 

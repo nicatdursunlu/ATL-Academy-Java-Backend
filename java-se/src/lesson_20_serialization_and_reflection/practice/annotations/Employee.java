@@ -1,4 +1,4 @@
-package lesson_20_serialization_and_reflection.practise.annotations;
+package lesson_20_serialization_and_reflection.practice.annotations;
 
 public class Employee extends People {
 
