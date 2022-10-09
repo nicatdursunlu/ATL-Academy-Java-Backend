@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.13" class="java.beans.XMLDecoder">
+ <object class="lesson_20_serialization_and_reflection.serialization_task.User">
+  <void property="email">
+   <string>nijatdursunlu@gmail.com</string>
+  </void>
+  <void property="grade">
+   <double>94.8</double>
+  </void>
+  <void property="name">
+   <string>Nijat</string>
+  </void>
+  <void property="surname">
+   <string>Dursunlu</string>
+  </void>
+ </object>
+</java>
