@@ -1,4 +1,4 @@
-package lesson_19_io_streams_rw_files.practise.io_streams;
+package lesson_19_io_streams_rw_files.practice.io_streams;
 
 import java.io.IOException;
 
