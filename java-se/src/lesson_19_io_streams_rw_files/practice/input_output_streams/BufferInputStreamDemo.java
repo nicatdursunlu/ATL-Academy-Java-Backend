@@ -8,7 +8,7 @@ public class BufferInputStreamDemo {
 
     public static void main(String[] args) {
 
-        String path = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/bufferFile.txt";
+        String path = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/bufferFile.txt";
 
         try (FileInputStream inputStream = new FileInputStream(path);
              BufferedInputStream buffer = new BufferedInputStream(inputStream)) {

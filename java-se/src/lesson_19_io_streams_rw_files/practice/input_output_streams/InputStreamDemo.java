@@ -7,8 +7,8 @@ public class InputStreamDemo {
 
     public static void main(String[] args) {
 
-        String path1 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/file1.txt";
-        String path2 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/file2.txt";
+        String path1 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/file1.txt";
+        String path2 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/file2.txt";
 
         try (FileInputStream inputStream = new FileInputStream(path1);
              FileInputStream inputStream2 = new FileInputStream(path2)) {

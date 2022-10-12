@@ -8,8 +8,8 @@ import java.io.IOException;
 public class ByteArray {
 
     public static void main(String[] args) {
-        String path1 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/array1.txt";
-        String path2 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/array2.txt";
+        String path1 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/array1.txt";
+        String path2 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/array2.txt";
 
         writeToOutputStreams(path1, path2);
 

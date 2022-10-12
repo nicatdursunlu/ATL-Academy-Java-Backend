@@ -8,9 +8,9 @@ public class SequenceInputStream2 {
 
     public static void main(String[] args) throws Exception {
 
-        String path1 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/file1.txt";
-        String path2 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/file2.txt";
-        String path3 = "src/lesson_19_io_streams_rw_files/practise/input_output_streams/sequenceFile.txt";
+        String path1 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/file1.txt";
+        String path2 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/file2.txt";
+        String path3 = "src/lesson_19_io_streams_rw_files/practice/input_output_streams/sequenceFile.txt";
 
         FileInputStream inputStream1 = new FileInputStream(path1);
         FileInputStream inputStream2 = new FileInputStream(path2);
