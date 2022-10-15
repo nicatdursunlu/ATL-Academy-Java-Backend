@@ -29,7 +29,8 @@ public class StreamDemo {
         mySortedList.forEach(n -> System.out.print(n + " ")); // 5 7 10 17 18 24
         System.out.println();
 
-        Stream<Integer> oddValues = myList.stream()
+        Stream<Integer> oddValues = myList
+                .stream()
                 .filter(e -> e % 2 == 0)
                 .filter(e -> e > 6);
         oddValues.forEach(n -> System.out.print(n + " ")); // 18 10 24
