@@ -40,7 +40,8 @@ public class SortedExample2 {
                 new User("Brandon", 42)
         );
 
-        List<User> sortedList = userList.stream()
+        List<User> sortedList = userList
+                .stream()
                 .sorted(Comparator.comparingInt(User::getAge).thenComparing(User::getName))
                 .collect(Collectors.toList());
 

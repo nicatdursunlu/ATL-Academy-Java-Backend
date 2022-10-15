@@ -30,14 +30,16 @@ public class FilterExample {
         products.add(new Product(6, "One Plus 8", 2900));
 
         Stream<Product> filteredProducts = products.stream().filter(p -> p.price > 2500);
-        filteredProducts.forEach(
-                product -> System.out.println(product.name + " " + product.price)
-        );
-//        Iphone 12 3500.0
-//        One Plus 8 2900.0
+        filteredProducts
+                .forEach(product -> System.out.println(product.name + " " + product.price));
+        // Iphone 12 3500.0
+        // One Plus 8 2900.0
 
-        List<String> names= List.of("Reflection", "Collection", "Stream");
-        List<String> result = names.stream().filter(s -> s.startsWith("S")).collect(Collectors.toList());
+        List<String> names = List.of("Reflection", "Collection", "Stream");
+        List<String> result = names
+                .stream()
+                .filter(s -> s.startsWith("S"))
+                .collect(Collectors.toList());
         System.out.println(result); // [Stream]
     }
 }
