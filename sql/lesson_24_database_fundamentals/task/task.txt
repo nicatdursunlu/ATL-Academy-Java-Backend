@@ -1,0 +1,21 @@
+Tasks – SQL
+
+1)	Create table (Orders)
+    Columns :
+	    Id, customer_id, price, order_date
+2)	Add new column (order_name) use alter
+3)	Add new column (test) use alter
+4)	Insert some data (10)
+5)	Select some rows where order_name not starts with T
+6)	Select orders where order date between January - May
+7)	Concat two columns (order_name (customer_id))
+8)	Case/when
+    Price > 12
+    Price < 12
+    Price = 12
+9)	Write a query to display a string "Hello SQL".
+10)	Write a query to display three numbers in three columns.
+11)	Write a query to display the sum of two numbers 200 and 30
+12)	Write a query to display unique names
+13)	 Write a query to display orders where price more than $100
+14)	 Drop column (test) use alter;
