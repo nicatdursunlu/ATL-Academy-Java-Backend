@@ -1,0 +1,16 @@
+Tasks - SQL-Part_2
+
+1.	Write query to display count of each age in a table;
+___________________
+|age| count_of_age |
+|23 |      3       |
+|33 |	   4       |
+|44 |      6       |
+
+2.	First of all you need to create two tables :
+a.	Loans -> {id, customer_id, loan}
+b.	Limits -> {id, customer_id, limit}
+Write a query to display the percent of limit which is used by each customer:
+e.g.: if customer_id = 123
+has a loan = 50 AZN; and has a limit = 100 AZN then the customer(123) is used 50 % percent of the limit,
+so the result must be like: 50%.
