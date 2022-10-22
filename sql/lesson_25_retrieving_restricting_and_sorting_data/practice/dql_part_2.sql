@@ -163,10 +163,10 @@ SELECT name, surname
 FROM student
 UNION
 SELECT test_name, surname
-from test_student;
+FROM test_student;
 
 SELECT id, name, surname
 FROM student
 UNION ALL
 SELECT id, test_name, surname
-from test_student;
+FROM test_student;
