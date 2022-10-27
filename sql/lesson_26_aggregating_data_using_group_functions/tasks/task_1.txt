@@ -1,0 +1,11 @@
+Exercises:
+1. Write a query which returns a count of races by each year.
+2. Write a query which returns a total count of rounds by each year. Show
+only years with a count of rounds more than 100.
+3. Write a query which returns the maximum round of the race in 2008.
+4. Write a query which returns the average points of the results.
+5. Write a query which returns the count of drivers only who have a number
+(column name).
+6. Write a query which returns count of drivers with nationality American,
+French. Sort by nationality.
+7. Write a query which returns the total of points for each driver.
