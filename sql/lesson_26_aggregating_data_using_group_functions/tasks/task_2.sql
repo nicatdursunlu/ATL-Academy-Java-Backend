@@ -19,3 +19,7 @@ select *
 into archived_races
 from races
 where year < 2000;
+
+select *
+into archived_races
+from (select * from races where year < 2000) as races1;
