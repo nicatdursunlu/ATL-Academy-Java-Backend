@@ -1,0 +1,10 @@
+Exercises:
+1. Create a products table with columns: id, price, count. The value of the
+price and count columns cannot be less than 0 and must have a value.
+2. We have a client table with columns: id, name, surname, email. The clients
+may or may not have email. Also, the clients cannot duplicate each other's
+email.
+3. We have a table for storing international money transfers. We can perform
+it via Swift. So, this table must include a swiftCode. The length of swift
+code in many countries is 11, but in several countries is 9. Make the
+column take an only value 9 or 11 length.
