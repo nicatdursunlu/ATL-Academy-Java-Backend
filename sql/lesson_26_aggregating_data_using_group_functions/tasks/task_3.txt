@@ -1,0 +1,13 @@
+Exercises:
+1. Assume you have an old_circuits table which contains only circuits with
+circuitid greater than 10. Write a query using set operators which returns
+records from circuits table and aren’t in old_circuits.
+2. Assume you have an old_circuits table which contains only circuits with
+circuitid greater than 10. Write a query using set operators which returns
+only records from circuits table which are in old_circuits.
+3. Write a query which first returns races in 2009 and then races in 2008.
+Races must be sorted descending by round count in each year.
+4. Assume you have an archived_races table which contains only races with
+a year less than 2000. Write a query using set operators which returns only
+records of new races with round count less than 50 or more than 200 in
+each year
