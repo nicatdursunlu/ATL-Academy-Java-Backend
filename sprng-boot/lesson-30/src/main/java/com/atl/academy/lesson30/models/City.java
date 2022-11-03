@@ -1,9 +1,10 @@
 package com.atl.academy.lesson30.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class City {
-    public static ArrayList<City> cities = new ArrayList<>();
+    public static List<City> data = new ArrayList<>();
     public int id;
     public String name;
     public String code;
