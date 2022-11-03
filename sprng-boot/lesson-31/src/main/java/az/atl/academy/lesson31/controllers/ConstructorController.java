@@ -1,0 +1,19 @@
+package az.atl.academy.lesson31.controllers;
+
+import az.atl.academy.lesson31.services.MyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class ConstructorController {
+    private MyService myService;
+
+    @Autowired
+    public ConstructorController(MyService myService) {
+        this.myService = myService;
+    }
+
+    public String saySomething() {
+        return myService.getHello();
+    }
+}
