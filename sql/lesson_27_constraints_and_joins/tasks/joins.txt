@@ -1,0 +1,20 @@
+Exercises:
+1. Write a query which returns records from the race table with circuit name
+which the race related to. Using subquery.
+2. Write a query which returns records from the race table with circuit name
+which the race related to. Using join.
+3. Write a query which returns the results of the driver with code “KUB” in
+each year.
+4. Create a new table from the results table where driverid less than 20. Write
+a query for getting drivers’ records with results. Note: Not all drivers have
+results.
+5. Write a query which returns employees list with their manager name and
+surname. If an employee is a manager then his manager data will be null.
+6. Write a query which returns the unique department name of employees
+whose salary is more than the minimum salary of their job.
+7. Return all locations with departments if the departments exist for the
+current location.
+8. Return dependents count for each employee. Show employee name,
+surname and count of children.
+9. Write a query which returns records from the employees table with total
+salary in their department
