@@ -43,15 +43,10 @@ select e1.*, e2.first_name, e2.last_name
 from employees e1
          left join employees e2 on e1.employee_id = e2.manager_id;
 
+
 -- 6. Write a query which returns the unique department name of employees
 -- whose salary is more than the minimum salary of their job.
-select e.employee_id,
-       e.first_name,
-       e.last_name,
-       d.department_name,
-       j.job_title,
-       e.salary,
-       j.min_salary
+select distinct d.department_name
 from departments d
          inner join employees e
                     on d.department_id = e.department_id
@@ -64,8 +59,8 @@ where e.salary > j.min_salary;
 -- current location.
 select *
 from countries c
-         inner join locations l on c.country_id = l.country_id
-         inner join departments d on l.location_id = d.location_id;
+         left join locations l on c.country_id = l.country_id
+         left join departments d on l.location_id = d.location_id;
 
 
 -- 8. Return dependents count for each employee. Show employee name,
@@ -84,4 +79,4 @@ group by e.employee_id;
 select d.department_name, sum(e.salary)
 from employees e
          inner join departments d on d.department_id = e.department_id
-group by d.department_name;
+group by d.department_id;
