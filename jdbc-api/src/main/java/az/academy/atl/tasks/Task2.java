@@ -25,9 +25,9 @@ public class Task2 {
 
     private static Long insertEmployee(Employee employee) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
+            String SQL = "insert into employees values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into employees values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS
+                    SQL, Statement.RETURN_GENERATED_KEYS
             );
             preparedStatement.setLong(1, employee.getEmployeeId());
             preparedStatement.setString(2, employee.getFirstName());

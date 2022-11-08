@@ -15,9 +15,8 @@ public class Task5 {
 
     private static void deleteEmployee(Long employeeId) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "delete from employees where employee_id = ? "
-            );
+            String SQL = "delete from employees where employee_id = ? ";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setLong(1, employeeId);
             preparedStatement.execute();
         } catch (SQLException e) {

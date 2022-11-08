@@ -23,19 +23,12 @@ public class Task4 {
 
     private static void updateEmployee(Long employeeId, Employee employee) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "update employees " +
-                            "set first_name = ?, " +
-                            "last_name =  ?, " +
-                            "email = ?, " +
-                            "phone_number = ?, " +
-                            "hire_date = ?, " +
-                            "job_id = ?, " +
-                            "salary = ?, " +
-                            "manager_id = ?, " +
-                            "department_id = ? " +
-                            "where employee_id = ?"
-            );
+            String SQL = "update employees " +
+                    "set first_name = ?, last_name =  ?, email = ?, " +
+                    "phone_number = ?, hire_date = ?, job_id = ?, " +
+                    "salary = ?, manager_id = ?, department_id = ? " +
+                    "where employee_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getLastName());
@@ -47,6 +40,7 @@ public class Task4 {
             preparedStatement.setLong(8, employee.getManagerId());
             preparedStatement.setLong(9, employee.getDepartmentId());
             preparedStatement.setLong(10, employeeId);
+
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);

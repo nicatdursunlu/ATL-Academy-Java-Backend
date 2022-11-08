@@ -1,5 +1,7 @@
 package az.academy.atl.tasks;
 
+import az.academy.atl.model.Department;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,14 +14,18 @@ public class Task3 {
 
     public static void main(String[] args) {
         System.out.println("LocationId: " + getLocationId("CA"));
-        insertNewDepartmentsBatch(getLocationId("CA"));
+
+        Department department1 =
+                new Department(12L, "Artificial Intelligence", getLocationId("CA"));
+        Department department2 =
+                new Department(13L, "Software Development", getLocationId("CA"));
+        insertNewDepartmentsBatch(department1, department2);
     }
 
     private static Long getLocationId(String countryId) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select * from locations where country_id = ?"
-            );
+            String SQL = "select location_id from locations where country_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, countryId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -32,19 +38,18 @@ public class Task3 {
         return -1L;
     }
 
-    private static void insertNewDepartmentsBatch(Long locationId) {
+    private static void insertNewDepartmentsBatch(Department department1, Department department2) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into departments values (?, ?, ?)"
-            );
-            preparedStatement.setLong(1, 12);
-            preparedStatement.setString(2, "Artificial Intelligence");
-            preparedStatement.setLong(3, locationId);
+            String SQL = "insert into departments values (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setLong(1, department1.getDepartmentId());
+            preparedStatement.setString(2, department1.getDepartmentName());
+            preparedStatement.setLong(3, department1.getLocationId());
             preparedStatement.addBatch();
 
-            preparedStatement.setLong(1, 13);
-            preparedStatement.setString(2, "Software Development");
-            preparedStatement.setLong(3, locationId);
+            preparedStatement.setLong(1, department2.getDepartmentId());
+            preparedStatement.setString(2, department2.getDepartmentName());
+            preparedStatement.setLong(3, department2.getLocationId());
             preparedStatement.addBatch();
 
             preparedStatement.executeBatch();
