@@ -18,8 +18,8 @@ public class Task1 {
     private static void getDepartments() {
         try (Connection connection = DriverManager.getConnection(JDBC_URL);
              Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("select * from departments d " +
-                    "inner join locations l on d.location_id = l.location_id");
+            String SQL = "select * from departments d inner join locations l on d.location_id = l.location_id";
+            ResultSet rs = statement.executeQuery(SQL);
 
             while (rs.next()) {
                 System.out.println(
