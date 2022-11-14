@@ -3,6 +3,7 @@ package az.academy.atl.repository.impl;
 import az.academy.atl.model.Department;
 import az.academy.atl.model.Employee;
 import az.academy.atl.repository.EmployeeRepository;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+@Component
 public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/postgres";
