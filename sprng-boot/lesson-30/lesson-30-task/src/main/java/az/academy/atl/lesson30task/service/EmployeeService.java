@@ -2,9 +2,8 @@ package az.academy.atl.lesson30task.service;
 
 import az.academy.atl.lesson30task.dto.DepartmentDto;
 import az.academy.atl.lesson30task.dto.EmployeeDto;
-import az.academy.atl.lesson30task.model.Department;
-import az.academy.atl.lesson30task.model.Employee;
 import az.academy.atl.lesson30task.repository.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,10 @@ public class EmployeeService {
 
     public List<DepartmentDto> getDepartments() {
         return employeeRepository.getDepartments();
+    }
+
+    public ResponseEntity<DepartmentDto> getDepartment(Long departmentId) {
+        return employeeRepository.getDepartment(departmentId);
     }
 
     public Long insertEmployee(EmployeeDto employee) {

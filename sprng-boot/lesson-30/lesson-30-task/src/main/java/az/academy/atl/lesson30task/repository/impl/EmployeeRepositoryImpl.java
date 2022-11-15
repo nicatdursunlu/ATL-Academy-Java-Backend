@@ -50,6 +50,35 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    public ResponseEntity<DepartmentDto> getDepartment(Long departmentId) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USER, PWD)) {
+            String SQL = "select * from departments d " +
+                    "inner join locations l on d.location_id = l.location_id " +
+                    "where d.department_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setLong(1, departmentId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                DepartmentDto department = new DepartmentDto();
+                department.setDepartmentId(resultSet.getLong("department_id"));
+                department.setDepartmentName(resultSet.getString("department_name"));
+                department.setLocationId(resultSet.getLong("location_id"));
+                department.setStreetAddress(resultSet.getString("street_address"));
+                department.setPostalCode(resultSet.getString("postal_code"));
+                department.setCity(resultSet.getString("city"));
+                department.setStateProvince(resultSet.getString("state_province"));
+                department.setCity(resultSet.getString("city"));
+                department.setCountryId(resultSet.getString("country_id"));
+                return new ResponseEntity<>(department, HttpStatus.OK);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @Override
     public Long insertEmployee(EmployeeDto employee) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USER, PWD)) {
             String SQL = "insert into employees" +
