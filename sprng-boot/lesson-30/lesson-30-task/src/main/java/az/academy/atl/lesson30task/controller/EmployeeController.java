@@ -2,9 +2,8 @@ package az.academy.atl.lesson30task.controller;
 
 import az.academy.atl.lesson30task.dto.DepartmentDto;
 import az.academy.atl.lesson30task.dto.EmployeeDto;
-import az.academy.atl.lesson30task.model.Department;
-import az.academy.atl.lesson30task.model.Employee;
 import az.academy.atl.lesson30task.service.EmployeeService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +23,11 @@ public class EmployeeController {
     @GetMapping("/departments")
     public List<DepartmentDto> getDepartments() {
         return employeeService.getDepartments();
+    }
+
+    @GetMapping("/departments/{id}")
+    public ResponseEntity<DepartmentDto> getDepartment(@PathVariable("id") Long departmentId) {
+        return employeeService.getDepartment(departmentId);
     }
 
     @PostMapping("/employees")

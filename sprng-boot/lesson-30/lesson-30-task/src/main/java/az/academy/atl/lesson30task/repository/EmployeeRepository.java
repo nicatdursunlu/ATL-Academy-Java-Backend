@@ -2,15 +2,15 @@ package az.academy.atl.lesson30task.repository;
 
 import az.academy.atl.lesson30task.dto.DepartmentDto;
 import az.academy.atl.lesson30task.dto.EmployeeDto;
-import az.academy.atl.lesson30task.model.Department;
-import az.academy.atl.lesson30task.model.Employee;
+
 import org.springframework.http.ResponseEntity;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 public interface EmployeeRepository {
     List<DepartmentDto> getDepartments();
+
+    ResponseEntity<DepartmentDto> getDepartment(Long departmentId);
 
     Long insertEmployee(EmployeeDto employee);
 
