@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,48 +33,52 @@ public class TutorialController {
     @GetMapping
     @ApiOperation(value = "Getting All Tutorials")
     public ResponseEntity<List<TutorialDto>> getAllTutorials(@RequestParam(required = false) String title) {
-        return tutorialService.getAllTutorials(title);
+        return new ResponseEntity<>(tutorialService.getAllTutorials(title), HttpStatus.OK);
     }
 
     @GetMapping("/published/{published}")
     @ApiOperation(value = "Get All Tutorials by Published")
     public ResponseEntity<List<TutorialDto>> findByPublished(@PathVariable boolean published) {
-        return tutorialService.findByPublished(published);
+        return new ResponseEntity<>(tutorialService.findByPublished(published), HttpStatus.OK);
     }
 
     @PostMapping
-    @ApiOperation(value = "Add Tutorial")
+    @ApiOperation(value = "Create Tutorial")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 201, message = "Tutorial added"),
+                    @ApiResponse(code = 201, message = "Tutorial created"),
                     @ApiResponse(code = 400, message = "Bad request"),
                     @ApiResponse(code = 500, message = "Something went wrong")
             })
-    public ResponseEntity<String> save(@RequestBody TutorialDto tutorial) {
-        return tutorialService.save(tutorial);
+    public ResponseEntity<String> createTutorial(@RequestBody TutorialDto tutorial) {
+        tutorialService.createTutorial(tutorial);
+        return new ResponseEntity<>("Tutorial was created successfully!", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Update Tutorial")
     public ResponseEntity<String> updateTutorial(@PathVariable Long id, @RequestBody TutorialDto tutorial) {
-        return tutorialService.updateTutorial(id, tutorial);
+        tutorialService.updateTutorial(id, tutorial);
+        return new ResponseEntity<>("Tutorial was updated successfully!", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get Tutorial by Id")
     public ResponseEntity<TutorialDto> getTutorialById(@PathVariable Long id) {
-        return tutorialService.findById(id);
+        return new ResponseEntity<>(tutorialService.findById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete Tutorial by Id")
     public ResponseEntity<String> deleteTutorial(@PathVariable Long id) {
-        return tutorialService.deleteTutorial(id);
+        tutorialService.deleteTutorial(id);
+        return new ResponseEntity<>("Tutorial was deleted successfully!", HttpStatus.OK);
     }
 
     @DeleteMapping
     @ApiOperation(value = "Delete All Tutorials")
     public ResponseEntity<String> deleteAllTutorials() {
-        return tutorialService.deleteAll();
+        tutorialService.deleteAll();
+        return new ResponseEntity<>("All Tutorials deleted successfully!", HttpStatus.OK);
     }
 }
