@@ -5,6 +5,7 @@ import static java.util.Collections.singletonList;
 import static springfox.documentation.builders.PathSelectors.any;
 
 import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -24,18 +25,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     private static final String TITLE = "TUTORIALS APP REST API";
+    private static final String DESCRIPTION = "Tutorials App Rest API";
     private static final String VERSION = "1.0";
     private static final String AUTHORIZATION = "Authorization";
     private static final String HEADER = "header";
     private static final String API_KEY = "apiKey";
     private static final String GLOBAL = "global";
     private static final String ACCESS_EVERYTHING = "accessEverything";
+    private static final String URL = "https://www.atltech.az";
+    private static final String EMAIL = "Nijat.Dursunlu@atltech.az";
+    private static final String LICENSE_URL = "http://www.apache.org/licenses/LICENSE-2.0.html";
+    private static final String BASE_PACKAGE = "az.academy.atl.tutorials.app";
 
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("az.academy.atl.tutorials.app"))
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(any()).build()
                 .securitySchemes(newArrayList(apiKey()))
                 .securityContexts(singletonList(securityContext()))
@@ -45,10 +51,10 @@ public class SwaggerConfig {
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder()
                 .title(TITLE)
-                .description(TITLE)
-                .contact(new Contact("Tutorial MS", "https://www.atltech.az", "Nijat.Dursunlu@atltech.az"))
+                .description(DESCRIPTION)
+                .contact(new Contact("Tutorial MS", URL, EMAIL))
                 .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .licenseUrl(LICENSE_URL)
                 .version(VERSION)
                 .build();
     }
