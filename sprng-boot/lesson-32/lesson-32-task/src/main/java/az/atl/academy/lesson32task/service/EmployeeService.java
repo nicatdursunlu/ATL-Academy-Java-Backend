@@ -16,8 +16,8 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public int insertEmployee(EmployeeDto employee) {
-        return employeeRepository.insertEmployee(employee);
+    public void insertEmployee(EmployeeDto employee) {
+        employeeRepository.insertEmployee(employee);
     }
 
     public void insertNewDepartmentsBatch(DepartmentDto department1, DepartmentDto department2) {
@@ -36,7 +36,7 @@ public class EmployeeService {
         return employeeRepository.getEmployees();
     }
 
-    public ResponseEntity<EmployeeDto> getEmployee(Long employeeId) {
+    public EmployeeDto getEmployee(Long employeeId) {
         return employeeRepository.getEmployee(employeeId);
     }
 }

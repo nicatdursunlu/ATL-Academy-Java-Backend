@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface EmployeeRepository {
 
-    int insertEmployee(EmployeeDto employee);
+    void insertEmployee(EmployeeDto employee);
 
     void insertNewDepartmentsBatch(DepartmentDto department1, DepartmentDto department2);
 
-    int updateEmployee(Long employeeId, EmployeeDto employee);
+    void updateEmployee(Long employeeId, EmployeeDto employee);
 
-    int deleteEmployee(Long employeeId);
+    void deleteEmployee(Long employeeId);
 
     Long getLocationId(String countryId);
 
     List<EmployeeDto> getEmployees();
 
-    ResponseEntity<EmployeeDto> getEmployee(Long employeeId);
+    EmployeeDto getEmployee(Long employeeId);
 }
