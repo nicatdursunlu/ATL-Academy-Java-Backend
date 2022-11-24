@@ -5,19 +5,17 @@ import az.atl.academy.lesson32task.dto.EmployeeDto;
 import az.atl.academy.lesson32task.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -36,11 +34,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     private String PWD;
 
     @Override
-    public int insertEmployee(EmployeeDto employee) {
+    public void insertEmployee(EmployeeDto employee) {
         String SQL = "insert into employees" +
                 "(first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id)" +
                 " values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(
+        jdbcTemplate.update(
                 SQL, employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhoneNumber(),
                 employee.getHireDate(), employee.getJobId(), employee.getSalary(), employee.getManagerId(),
                 employee.getDepartmentId()
@@ -69,13 +67,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public int updateEmployee(Long employeeId, EmployeeDto employee) {
+    public void updateEmployee(Long employeeId, EmployeeDto employee) {
         String SQL = "update employees " +
                 "set first_name = ?, last_name =  ?, email = ?, " +
                 "phone_number = ?, hire_date = ?, job_id = ?, " +
                 "salary = ?, manager_id = ?, department_id = ? " +
                 "where employee_id = ?";
-        return jdbcTemplate.update(
+        jdbcTemplate.update(
                 SQL, employee.getFirstName(), employee.getLastName(), employee.getEmail(),
                 employee.getPhoneNumber(), employee.getHireDate(), employee.getJobId(),
                 employee.getSalary(), employee.getManagerId(),
@@ -84,9 +82,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public int deleteEmployee(Long employeeId) {
+    public void deleteEmployee(Long employeeId) {
         String SQL = "delete from employees where employee_id = ? ";
-        return jdbcTemplate.update(SQL, employeeId);
+        jdbcTemplate.update(SQL, employeeId);
     }
 
     @Override
@@ -107,58 +105,17 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public List<EmployeeDto> getEmployees() {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USER, PWD);
-             Statement statement = connection.createStatement()) {
-            String SQL = "select * from employees";
-            ResultSet rs = statement.executeQuery(SQL);
-
-            List<EmployeeDto> employees = new ArrayList<>();
-            while (rs.next()) {
-                EmployeeDto employee = new EmployeeDto();
-                employee.setEmployeeId(rs.getLong("employee_id"));
-                employee.setFirstName(rs.getString("first_name"));
-                employee.setLastName(rs.getString("last_name"));
-                employee.setEmail(rs.getString("email"));
-                employee.setPhoneNumber(rs.getString("phone_number"));
-                employee.setHireDate(rs.getDate("hire_date"));
-                employee.setJobId(rs.getLong("job_id"));
-                employee.setSalary(rs.getDouble("salary"));
-                employee.setManagerId(rs.getLong("manager_id"));
-                employee.setDepartmentId(rs.getLong("department_id"));
-
-                employees.add(employee);
-            }
-            return employees;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String SQL = "select * from employees";
+        return jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(EmployeeDto.class));
     }
 
     @Override
-    public ResponseEntity<EmployeeDto> getEmployee(Long employeeId) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USER, PWD)) {
+    public EmployeeDto getEmployee(Long employeeId) {
+        try {
             String SQL = "select * from employees where employee_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setLong(1, employeeId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                EmployeeDto employee = new EmployeeDto();
-                employee.setEmployeeId(resultSet.getLong("employee_id"));
-                employee.setFirstName(resultSet.getString("first_name"));
-                employee.setLastName(resultSet.getString("last_name"));
-                employee.setEmail(resultSet.getString("email"));
-                employee.setPhoneNumber(resultSet.getString("phone_number"));
-                employee.setHireDate(resultSet.getDate("hire_date"));
-                employee.setJobId(resultSet.getLong("job_id"));
-                employee.setSalary(resultSet.getDouble("salary"));
-                employee.setManagerId(resultSet.getLong("manager_id"));
-                employee.setDepartmentId(resultSet.getLong("department_id"));
-
-                return new ResponseEntity<>(employee, HttpStatus.OK);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return jdbcTemplate.queryForObject(SQL, BeanPropertyRowMapper.newInstance(EmployeeDto.class), employeeId);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

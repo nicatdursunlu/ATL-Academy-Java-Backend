@@ -1,7 +1,5 @@
 package az.atl.academy.lesson32task.controller;
 
-
-import az.atl.academy.lesson32task.dto.DepartmentDto;
 import az.atl.academy.lesson32task.dto.EmployeeDto;
 import az.atl.academy.lesson32task.service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -22,15 +20,10 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public int insertEmployee(@RequestBody EmployeeDto employee) {
-        return employeeService.insertEmployee(employee);
+    public ResponseEntity<String> insertEmployee(@RequestBody EmployeeDto employee) {
+        employeeService.insertEmployee(employee);
+        return new ResponseEntity<>("Employee was added successfully!", HttpStatus.CREATED);
     }
-
-//    @PostMapping("/departments")
-//    public void insertNewDepartmentsBatch(@RequestBody DepartmentDto department1,
-//                                          @RequestBody DepartmentDto department2) {
-//        employeeService.insertNewDepartmentsBatch(department1, department2);
-//    }
 
     @GetMapping
     public List<EmployeeDto> getEmployees() {
@@ -38,17 +31,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("id") Long employeeId) {
+    public EmployeeDto getEmployee(@PathVariable("id") Long employeeId) {
         return employeeService.getEmployee(employeeId);
     }
 
     @PutMapping("/{id}")
-    public void updateEmployee(@PathVariable("id") Long employeeId, @RequestBody EmployeeDto employee) {
+    public ResponseEntity<String> updateEmployee(@PathVariable("id") Long employeeId, @RequestBody EmployeeDto employee) {
         employeeService.updateEmployee(employeeId, employee);
+        return new ResponseEntity<>("Employee was updated successfully!", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable("id") Long employeeId) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
+        return new ResponseEntity<>("Employee was deleted successfully!", HttpStatus.OK);
     }
 }

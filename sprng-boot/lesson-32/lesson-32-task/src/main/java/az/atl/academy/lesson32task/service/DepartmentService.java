@@ -18,7 +18,19 @@ public class DepartmentService {
         return departmentRepository.getDepartments();
     }
 
-    public ResponseEntity<DepartmentDto> getDepartment(Long departmentId) {
+    public DepartmentDto getDepartment(Long departmentId) {
         return departmentRepository.getDepartment(departmentId);
+    }
+
+    public void insertDepartment(DepartmentDto department) {
+        departmentRepository.insertDepartment(department);
+    }
+
+    public void updateDepartment(Long departmentId, DepartmentDto department) {
+        departmentRepository.updateDepartment(departmentId, department);
+    }
+
+    public void deleteDepartment(Long departmentId) {
+        departmentRepository.deleteDepartment(departmentId);
     }
 }
