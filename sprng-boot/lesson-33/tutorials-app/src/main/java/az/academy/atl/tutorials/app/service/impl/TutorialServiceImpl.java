@@ -75,7 +75,7 @@ public class TutorialServiceImpl implements TutorialService {
             log.info("TutorialServiceImpl.updateTutorial.end with id: {}", id);
         } else {
             log.error("TutorialServiceImpl.updateTutorial.error with id: {}", id);
-            throw new RuntimeException("Tutorial not found");
+            throw new RuntimeException("Tutorial not found with id " + id);
         }
     }
 
@@ -89,7 +89,7 @@ public class TutorialServiceImpl implements TutorialService {
             return tutorialDto;
         } else {
             log.error("TutorialServiceImpl.findById.error with id: {}", id);
-            throw new RuntimeException("Tutorial not found");
+            throw new RuntimeException("Tutorial not found with id " + id);
         }
     }
 
@@ -99,7 +99,7 @@ public class TutorialServiceImpl implements TutorialService {
         int result = tutorialRepository.deleteById(id);
         if (result == 0) {
             log.error("TutorialServiceImpl.deleteTutorial.error with id: {}", id);
-            throw new RuntimeException("Tutorial not found");
+            throw new RuntimeException("Tutorial not found with id " + id);
         } else
             log.info("TutorialServiceImpl.deleteTutorial.end with id: {}", id);
     }
