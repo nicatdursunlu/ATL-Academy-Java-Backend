@@ -7,9 +7,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface EmployeeRepository {
-    List<DepartmentDto> getDepartments();
-
-    ResponseEntity<DepartmentDto> getDepartment(Long departmentId);
 
     int insertEmployee(EmployeeDto employee);
 
