@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoSuchTutorialExistsException extends RuntimeException{
+public class NoSuchTutorialExistsException extends RuntimeException {
+    private String code;
     private String message;
-
 }

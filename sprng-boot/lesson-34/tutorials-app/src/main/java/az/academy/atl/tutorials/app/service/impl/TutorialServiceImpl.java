@@ -1,7 +1,8 @@
 package az.academy.atl.tutorials.app.service.impl;
 
 import az.academy.atl.tutorials.app.dto.TutorialDto;
-import az.academy.atl.tutorials.app.exception.NoSuchElementException;
+//import az.academy.atl.tutorials.app.exception.NoSuchElementException;
+import az.academy.atl.tutorials.app.exception.NoSuchTutorialExistsException;
 import az.academy.atl.tutorials.app.exception.TutorialAlreadyExistsException;
 import az.academy.atl.tutorials.app.mapper.TutorialMapper;
 import az.academy.atl.tutorials.app.model.Tutorial;
@@ -15,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static az.academy.atl.tutorials.app.model.constants.ExceptionConstants.TUTORIAL_ALREADY_EXISTS_CODE;
+import static az.academy.atl.tutorials.app.model.constants.ExceptionConstants.TUTORIAL_ALREADY_EXISTS_MESSAGE;
+import static az.academy.atl.tutorials.app.model.constants.ExceptionConstants.TUTORIAL_NOT_FOUND_CODE;
+import static az.academy.atl.tutorials.app.model.constants.ExceptionConstants.TUTORIAL_NOT_FOUND_MESSAGE;
 
 @Slf4j
 @Service
@@ -56,37 +62,36 @@ public class TutorialServiceImpl implements TutorialService {
 
     @Override
     public void createTutorial(TutorialDto tutorialDto) {
-        try {
-            boolean isExists = tutorialRepository
-                    .findAll()
-                    .stream()
-                    .anyMatch(tutorial -> Objects.equals(tutorial.getTitle(), tutorialDto.getTitle()));
-            if (isExists) {
-                throw new TutorialAlreadyExistsException("Tutorial with this title already exists!");
-            } else {
-                log.info("TutorialServiceImpl.createTutorial.start");
-                tutorialRepository.save(TutorialMapper.mapDtoToEntity(tutorialDto));
-                log.info("TutorialServiceImpl.createTutorial.end");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("TutorialServiceImpl.createTutorial.error with message: {}", e.getMessage());
+        log.info("TutorialServiceImpl.createTutorial.start");
+        if (isTutorialExists(tutorialDto)) {
+            log.error("TutorialServiceImpl.createTutorial.error");
+            throw new TutorialAlreadyExistsException(TUTORIAL_ALREADY_EXISTS_CODE,
+                    String.format(TUTORIAL_ALREADY_EXISTS_MESSAGE, tutorialDto.getTitle()));
+        } else {
+            tutorialRepository.save(TutorialMapper.mapDtoToEntity(tutorialDto));
+            log.info("TutorialServiceImpl.createTutorial.end");
         }
     }
 
     @Override
-    public void updateTutorial(Long id, TutorialDto tutorial) {
+    public void updateTutorial(Long id, TutorialDto tutorialDto) {
         log.info("TutorialServiceImpl.updateTutorial.start with id: {}", id);
         Tutorial oldTutorial = tutorialRepository.findById(id);
-        if (oldTutorial != null) {
-            oldTutorial.setTitle(tutorial.getTitle());
-            oldTutorial.setDescription(tutorial.getDescription());
-            oldTutorial.setPublished(tutorial.getPublished());
+
+        if (oldTutorial == null) {
+            log.error("TutorialServiceImpl.updateTutorial.error with id: {}", id);
+            throw new NoSuchTutorialExistsException(TUTORIAL_NOT_FOUND_CODE, String.format(TUTORIAL_NOT_FOUND_MESSAGE, id));
+        }
+        if (isTutorialExists(tutorialDto)) {
+            log.error("TutorialServiceImpl.updateTutorial.error with id: {}", id);
+            throw new TutorialAlreadyExistsException(TUTORIAL_ALREADY_EXISTS_CODE,
+                    String.format(TUTORIAL_ALREADY_EXISTS_MESSAGE, tutorialDto.getTitle()));
+        } else {
+            oldTutorial.setTitle(tutorialDto.getTitle());
+            oldTutorial.setDescription(tutorialDto.getDescription());
+            oldTutorial.setPublished(tutorialDto.getPublished());
             tutorialRepository.update(oldTutorial);
             log.info("TutorialServiceImpl.updateTutorial.end with id: {}", id);
-        } else {
-            log.error("TutorialServiceImpl.updateTutorial.error with id: {}", id);
-            throw new RuntimeException("Tutorial not found with id " + id);
         }
     }
 
@@ -100,7 +105,7 @@ public class TutorialServiceImpl implements TutorialService {
             return tutorialDto;
         } else {
             log.error("TutorialServiceImpl.findById.error with id: {}", id);
-            throw new NoSuchElementException("NO TUTORIAL FOUND WITH ID " + id);
+            throw new NoSuchTutorialExistsException(TUTORIAL_NOT_FOUND_CODE, String.format(TUTORIAL_NOT_FOUND_MESSAGE, id));
         }
     }
 
@@ -110,7 +115,7 @@ public class TutorialServiceImpl implements TutorialService {
         int result = tutorialRepository.deleteById(id);
         if (result == 0) {
             log.error("TutorialServiceImpl.deleteTutorial.error with id: {}", id);
-            throw new RuntimeException("Tutorial not found with id " + id);
+            throw new NoSuchTutorialExistsException(TUTORIAL_NOT_FOUND_CODE, String.format(TUTORIAL_NOT_FOUND_MESSAGE, id));
         } else
             log.info("TutorialServiceImpl.deleteTutorial.end with id: {}", id);
     }
@@ -123,5 +128,12 @@ public class TutorialServiceImpl implements TutorialService {
             log.info("TutorialServiceImpl.deleteAll.end");
         else
             log.error("TutorialServiceImpl.deleteAll.error");
+    }
+
+    private boolean isTutorialExists(TutorialDto tutorialDto) {
+        return tutorialRepository
+                .findAll()
+                .stream()
+                .anyMatch(tutorial -> Objects.equals(tutorial.getTitle(), tutorialDto.getTitle()));
     }
 }

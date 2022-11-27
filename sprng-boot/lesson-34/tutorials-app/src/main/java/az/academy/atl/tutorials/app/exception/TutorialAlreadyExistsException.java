@@ -10,10 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TutorialAlreadyExistsException extends RuntimeException {
+    private String code;
     private String message;
-
-//    public CustomerAlreadyExistsException(String message) {
-//        super(message);
-//        this.message = message;
-//    }
 }
