@@ -1,32 +1,27 @@
 package az.atl.academy.employees.app.controller;
 
 import az.atl.academy.employees.app.dto.EmployeeDto;
-import az.atl.academy.employees.app.exception.EmployeeNotFoundException;
-import az.atl.academy.employees.app.model.ErrorResponse;
 import az.atl.academy.employees.app.service.EmployeeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/v1/employees")
 @Api(tags = "Employee Controller")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -68,13 +63,5 @@ public class EmployeeController {
             @ApiParam(name = "id", value = "Employee id", example = "100") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
         return new ResponseEntity<>("Employee was deleted successfully!", HttpStatus.OK);
-    }
-
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleException(EmployeeNotFoundException e) {
-        log.error("EmployeeNotFoundException ", e);
-        return new ResponseEntity<>(
-                new ErrorResponse(e.getStatus(), e.getStatus().value(), e.getMessage(), LocalDateTime.now()),
-                e.getStatus());
     }
 }

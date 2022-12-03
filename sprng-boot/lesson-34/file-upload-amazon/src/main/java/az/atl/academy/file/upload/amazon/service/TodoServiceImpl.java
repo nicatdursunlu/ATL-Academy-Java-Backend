@@ -10,7 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
+
+import static org.apache.http.entity.ContentType.*;
 
 @Slf4j
 @Service
@@ -26,12 +27,12 @@ public class TodoServiceImpl implements TodoService {
             throw new IllegalStateException("Cannot upload empty file");
         }
         //Check if the file is an image
-//        if (!Arrays.asList(MediaType.IMAGE_PNG.getMimeType(),
-////                MediaType.IMAGE_BMP.getMimeType(),
-//                MediaType.IMAGE_GIF.getMimeType(),
-//                MediaType.IMAGE_JPEG.getMimeType()).contains(file.getContentType())) {
-//            throw new IllegalStateException("FIle uploaded is not an image");
-//        }
+        if (!Arrays.asList(IMAGE_PNG.getMimeType(),
+                IMAGE_BMP.getMimeType(),
+                IMAGE_GIF.getMimeType(),
+                IMAGE_JPEG.getMimeType()).contains(file.getContentType())) {
+            throw new IllegalStateException("FIle uploaded is not an image");
+        }
         //get file metadata
         Map<String, String> metadata = new HashMap<>();
         metadata.put("Content-Type", file.getContentType());

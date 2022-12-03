@@ -1,9 +1,6 @@
 package az.atl.academy.employees.app.controller;
 
-
 import az.atl.academy.employees.app.dto.DepartmentDto;
-import az.atl.academy.employees.app.exception.DepartmentNotFoundException;
-import az.atl.academy.employees.app.model.ErrorResponse;
 import az.atl.academy.employees.app.service.DepartmentService;
 
 import io.swagger.annotations.Api;
@@ -15,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -66,13 +62,5 @@ public class DepartmentController {
             @ApiParam(name = "id", value = "Department id", example = "100") Long departmentId) {
         departmentService.deleteDepartment(departmentId);
         return new ResponseEntity<>("Department was deleted successfully!", HttpStatus.OK);
-    }
-
-    @ExceptionHandler(DepartmentNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleException(DepartmentNotFoundException e) {
-        log.error("DepartmentNotFoundException ", e);
-        return new ResponseEntity<>(
-                new ErrorResponse(e.getStatus(), e.getStatus().value(), e.getMessage(), LocalDateTime.now()),
-                e.getStatus());
     }
 }
