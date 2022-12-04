@@ -1,11 +1,14 @@
 package az.atl.academy.employees.app.service;
 
 import az.atl.academy.employees.app.dto.EmployeeDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface EmployeeService {
-    void insertEmployee(EmployeeDto employeeDto);
+    void uploadEmployeePhoto(MultipartFile file);
+
+    void insertEmployee(EmployeeDto employeeDto, MultipartFile file);
 
 //    public void insertNewDepartmentsBatch(DepartmentDto department1, DepartmentDto department2) {
 //        employeeRepository.insertNewDepartmentsBatch(department1, department2);

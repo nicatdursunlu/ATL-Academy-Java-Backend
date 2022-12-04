@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,10 +27,20 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Insert Employee")
-    public ResponseEntity<String> insertEmployee(@RequestBody EmployeeDto employee) {
-        employeeService.insertEmployee(employee);
+    public ResponseEntity<String> insertEmployee(@RequestPart MultipartFile file, EmployeeDto employee) {
+        employeeService.insertEmployee(employee, file);
         return new ResponseEntity<>("Employee was added successfully!", HttpStatus.CREATED);
     }
+
+//    @PostMapping("/file")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @ApiOperation(value = "Upload employee photo")
+//    public void uploadEmployeePhoto(@RequestParam(name = "document", required = false) MultipartFile file) {
+//        if (!file.isEmpty()) {
+//            log.info("file.isEmpty: {}", file.isEmpty());
+//            service.uploadEmployeePhoto(file);
+//        }
+//    }
 
     @GetMapping
     @ApiOperation(value = "Getting All Employees")

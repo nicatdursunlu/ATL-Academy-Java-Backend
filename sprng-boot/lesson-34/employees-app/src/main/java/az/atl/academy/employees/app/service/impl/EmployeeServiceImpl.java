@@ -12,7 +12,12 @@ import az.atl.academy.employees.app.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +27,25 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final Path root = Paths.get("uploads");
 
-    public void insertEmployee(EmployeeDto employeeDto) {
+    public void uploadEmployeePhoto(MultipartFile file) {
+        try {
+            log.info("EmployeeService.uploadEmployeePhoto.start");
+            Files.copy(file.getInputStream(), root.resolve(file.getOriginalFilename()));
+            log.info("EmployeeService.uploadEmployeePhoto.end");
+        } catch (Exception e) {
+            log.error("EmployeeService.uploadEmployeePhoto.error", e);
+            if (e instanceof FileAlreadyExistsException) {
+                log.error("EmployeeService.uploadEmployeePhoto.error", e);
+                throw new RuntimeException("already exists");
+            }
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void insertEmployee(EmployeeDto employeeDto, MultipartFile file) {
+        uploadEmployeePhoto(file);
         try {
             log.info("EmployeeService.insertEmployee.start");
             employeeRepository.insertEmployee(EmployeeMapper.mapDtoToEntity(employeeDto));
