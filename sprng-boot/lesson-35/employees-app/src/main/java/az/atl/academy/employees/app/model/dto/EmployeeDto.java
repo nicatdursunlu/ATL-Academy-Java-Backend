@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "EmployeeModel", description = "Model who represents a employee entity")
+@ApiModel(value = "Employee DTO", description = "Model who represents a employee entity")
 public class EmployeeDto {
     @ApiModelProperty(value = "Employee's id", example = "100")
     private Long employeeId;

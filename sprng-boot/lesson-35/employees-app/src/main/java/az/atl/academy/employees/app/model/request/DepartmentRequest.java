@@ -1,23 +1,18 @@
-package az.atl.academy.employees.app.model.dto;
+package az.atl.academy.employees.app.model.request;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "Department DTO", description = "Model who represents a department entity")
-public class DepartmentDto {
-    @ApiModelProperty(value = "Department's id", example = "100")
-    private Long departmentId;
-
+public class DepartmentRequest {
     @ApiModelProperty(value = "Department's name", example = "Software Development")
     private String departmentName;
 
