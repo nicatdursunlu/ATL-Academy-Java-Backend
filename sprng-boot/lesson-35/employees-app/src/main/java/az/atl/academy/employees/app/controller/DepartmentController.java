@@ -34,7 +34,7 @@ public class DepartmentController {
     @GetMapping
     @ApiOperation(value = "Getting All Departments")
     public ResponseEntity<List<DepartmentDto>> getDepartments() {
-        return new ResponseEntity<List<DepartmentDto>>(departmentService.getDepartments(), HttpStatus.OK);
+        return new ResponseEntity<>(departmentService.getDepartments(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

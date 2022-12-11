@@ -27,4 +27,5 @@ public class Department {
 
     private String departmentName;
     private Long locationId;
+    private Boolean isDeleted;
 }
