@@ -25,7 +25,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<DepartmentDto> getDepartments() {
         log.info("DepartmentService.getDepartments.start");
         List<DepartmentDto> departments = departmentRepository
-                .findAll()
+                .findAllByIsDeletedFalse()
+//                .findAll()
                 .stream()
                 .map(DepartmentMapper::mapEntityToDto)
                 .collect(Collectors.toList());
@@ -64,14 +65,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     public void deleteDepartment(Long departmentId) {
-        try {
-            log.info("DepartmentService.deleteDepartment.start with id: {}", departmentId);
-            departmentRepository.deleteById(departmentId);
-            log.info("DepartmentService.deleteDepartment.end with id: {}", departmentId);
-        } catch (Exception e) {
-            log.error("DepartmentService.deleteDepartment.error with id: {}", departmentId);
-            throw new DepartmentNotFoundException(String.format("Department with id %s not found", departmentId));
-        }
+        log.info("DepartmentService.deleteDepartment.start with id: {}", departmentId);
+        var department = fetchDepartmentIfExists(departmentId);
+        department.setIsDeleted(true);
+        departmentRepository.save(department);
+        log.info("DepartmentService.deleteDepartment.end with id: {}", departmentId);
     }
 
     private Department fetchDepartmentIfExists(Long id) {
